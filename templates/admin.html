@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Tech Doctors</title>
+    <style>
+        /* Admin Cards */
+        .admin-cards {
+    display: flex;
+    gap: 15px;
+    margin: 30px;
+    align-items: center;
+    justify-content:center ;
+
+}
+
+.admin-card {
+    background-color: black;
+    border: 1px solid white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+
+}
+
+.admin-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+   
+.admin-card:hover {
+    border: 3px solid transparent;
+    animation: border-animation 2s infinite;
+}
+
+@keyframes border-animation {
+    0% { border-color: pink; }
+    50% { border-color: blue; }
+    100% { border-color: green; }
+}
+
+.gradient-pink { background: linear-gradient(45deg, #ff007b, #ff77a9); }
+.gradient-green { background: linear-gradient(45deg, #1cc88a, #a2f9d4); }
+.gradient-blue { background: linear-gradient(45deg, #4e73df, #73a3f9); }
+
+        /* General Dashboard Styles */
+       
+
+        /* Sidebar for Desktop */
+        .sidebar {
+            width: 150px;
+            background: #292b2c;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            overflow-y: auto;
+           
+        }
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar nav ul li {
+            margin: 10px 0;
+        }
+        .sidebar nav ul li a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #fff;
+            padding: 10px;
+            display: block;
+            transition: all 0.3s;
+        }
+        .sidebar nav ul li.active a,
+        .sidebar nav ul li a:hover {
+            background: #ffa500;
+            color: #292b2c;
+            border-radius: 4px;
+        }
+
+
+        /* Main Content Section */
+        .hamburger {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: #292b2c;
+            color: #fff;
+            font-size: 24px;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        /* Sidebar Hidden for Mobile */
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.show {
+            transform: translateX(0);
+        }
+
+        /* Transition for Sidebar */
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Main Content Section */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            margin-left: 200px; /* Sidebar Width for Desktop */
+            overflow-y: scroll;
+            
+        }
+
+        /* Adjust for Mobile View */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            .sidebar {
+                width: 20%;
+                position: fixed;
+                transform: translateX(-100%);
+            
+            }
+            .sidebar nav ul{
+                margin-top: 50px;
+            }
+            .main-content {
+                margin-left: 0;
+                padding-top: 60px;
+            }
+        }
+        h1, h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        /* Overview Section */
+        .dashboard-overview {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .profile {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .profile h3 {
+            margin: 10px 0 5px;
+            font-size: 18px;
+        }
+
+    </style>
+     <script>
+       document.addEventListener("DOMContentLoaded", function () {
+    const hamburger = document.querySelector(".hamburger");
+    const sidebar = document.querySelector(".sidebar");
+    const body = document.body;
+
+    // Toggle sidebar on hamburger click
+    hamburger.addEventListener("click", function (event) {
+        sidebar.classList.toggle("show");
+        sidebar.classList.toggle("hidden");
+    });
+
+    // Close sidebar when clicking outside
+    body.addEventListener("click", function (event) {
+        if (!sidebar.contains(event.target) && !hamburger.contains(event.target)) {
+            sidebar.classList.add("hidden");
+            sidebar.classList.remove("show");
+        }
+    });
+});
+    </script>
+  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="hamburger">☰</div>
+        <aside class="sidebar hidden">
+            <nav>
+                <div class="profile">
+                    <img src="{{ url_for('static', filename='images/' +userphoto) }}" alt="Profile Photo">
+                    <h3 style="color: #f6f6f6;">{{ session['username'] }}</h3>
+                    <h3 style="color: #ff8c00">Tech Doctors</h3>
+                </div>
+                <ul>
+                    <li ><a href="{{ url_for('dashboard') }}">Home</a></li>
+                    <li><a href="{{ url_for('projects') }}">Projects</a></li>
+                    <li class="active"><a href="#">Accounts</a></li>
+                    <li><a href="{{ url_for('admin') }}">Admin</a></li>
+                    <li><a href="#">Charts</a></li>
+                    <li><a href="{{ url_for('invoices') }}">Invoices</a></li>
+                    
+                    <li><a href="{{ url_for('login') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <aside class="sidebar">
+            <nav>
+                <div class="profile">
+                    <img src="{{ url_for('static', filename='images/' +userphoto) }}" alt="Profile Photo">
+                    <h3 style="color: #f6f6f6;">{{ session['username'] }}</h3>
+                    <h3 style="color: #ff8c00">Tech Doctors</h3>
+                </div>
+                <ul>
+                    <li ><a href="{{ url_for('dashboard') }}">Home</a></li>
+                    <li><a href="{{ url_for('projects') }}">Projects</a></li>
+                    <li class="active"><a href="#">Accounts</a></li>
+                    <li><a href="{{ url_for('admin') }}">Admin</a></li>
+                    <li><a href="#">Charts</a></li>
+                    <li><a href="{{ url_for('invoices') }}">Invoices</a></li>
+                    
+                    <li><a href="{{ url_for('login') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </aside> 
+        
+        
+    </div>
+    <section class="admin-cards">
+        <div class="admin-card">
+            <img src="{{ url_for('static', filename='images/sufiyan.jpg') }}" alt="Sufiyan">
+            <h4>Sufiyan</h4>
+            <p>CEO, UI/UX Designer</p>
+        </div>
+        <div class="admin-card">
+            <img src="{{ url_for('static', filename='images/al harees.jpg') }}" alt="Al Harees">
+            <h4>Al Harees</h4>
+            <p>CEO, Data Analyst</p>
+        </div>
+        <div class="admin-card">
+            <img src="{{ url_for('static', filename='images/sudha.jpg') }}" alt="Sudhakar">
+            <h4>Sudhakar</h4>
+            <p>CEO, Back-End Developer</p>
+        </div>
+    </section>
+
+    <!-- Project Complete Modal -->
+
+    </div>
+
+    </body>
+</html>

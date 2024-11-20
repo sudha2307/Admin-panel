@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Tech Doctors</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="profile">
+                <img src="{{ url_for('static', filename='images/' + userphoto) }}" alt="Profile Photo">
+
+                <h3>{{ username }}</h3>
+                <h4 style="color: blue;">Tech Doctors</h4>
+           
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="{{ url_for('projects') }}">Projects</a></li>
+                    <li><a href="{{ url_for('accounts') }}">Accounts</a></li>
+                    <li><a href="{{ url_for('admin') }}">Admin</a></li>
+                
+                    <li><a href="#">Charts</a></li>
+                    <li><a href="{{ url_for('invoices') }}">Invoices</a></li>
+                    <li><a href="{{ url_for('login') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <h1>Welcome back, {{ username }}!</h1>
+            </header>
+
+            <!-- Cards -->
+            <section class="dashboard-overview">
+                <div class="stat-card gradient-pink">Total Balance: ${{ current_balance }}</div>
+                <div class="stat-card gradient-green">{{ current_month_name }} Income: ${{ total_income }}</div>
+                <div class="stat-card gradient-blue">{{ current_month_name }} Expense: ${{ total_expense }}</div>
+            </section>
+    
+
+            <!-- Charts -->
+            <section class="charts">
+                <canvas id="incomeChart"></canvas>
+                <br>
+                <canvas id="pieChart"></canvas>
+            </section>
+
+            <!-- Admin Cards -->
+            <section class="admin-cards">
+                <div class="admin-card">
+                    <img src="{{ url_for('static', filename='images/sufiyan.jpg') }}" alt="Sufiyan">
+                    <h4>Sufiyan</h4>
+                    <p>CEO, UI/UX Designer</p>
+                </div>
+                <div class="admin-card">
+                    <img src="{{ url_for('static', filename='images/al harees.jpg') }}" alt="Al Harees">
+                    <h4>Al Harees</h4>
+                    <p>CEO, Data Analyst</p>
+                </div>
+                <div class="admin-card">
+                    <img src="{{ url_for('static', filename='images/sudha.jpg') }}" alt="Sudhakar">
+                    <h4>Sudhakar</h4>
+                    <p>CEO, Back-End Developer</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Bar Chart
+        const incomeChartCtx = document.getElementById('incomeChart').getContext('2d');
+        new Chart(incomeChartCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Monthly Income',
+                    data: {{ monthly_income_data | tojson }},
+                    backgroundColor: '#4e73df'
+                }]
+            }
+        });
+
+        // Pie Chart
+        const pieChartCtx = document.getElementById('pieChart').getContext('2d');
+        new Chart(pieChartCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Income %', 'Expense %'],
+                datasets: [{
+                    data: [{{ income_percentage }}, {{ expense_percentage }}],
+                    backgroundColor: ['#1cc88a', '#e74a3b']
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

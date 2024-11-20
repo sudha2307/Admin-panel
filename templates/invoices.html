@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Section - Tech Doctors</title>
+    <link rel="stylesheet" href="/static/css/dash_style.css">
+    <style>
+        /* Styling from the provided code */
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+            background: #f5f5f5;
+        }
+
+        /* Sidebar for Desktop */
+        .sidebar {
+            width: 180px;
+            background: #292b2c;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            overflow-y: auto;
+           
+        }
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar nav ul li {
+            margin: 10px 0;
+        }
+        .sidebar nav ul li a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #fff;
+            padding: 10px;
+            display: block;
+            transition: all 0.3s;
+        }
+        .sidebar nav ul li.active a,
+        .sidebar nav ul li a:hover {
+            background: #ffa500;
+            color: #292b2c;
+            border-radius: 4px;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .table-container {
+            margin-top: 20px;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .styled-table thead tr {
+            background-color: #292b2c;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #292b2c;
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #292b2c;
+        }
+
+        .btn-download,
+        .btn-upload {
+            background-color: #007bff;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-download:hover,
+        .btn-upload:hover {
+            background-color: #0056b3;
+        }
+
+        /* Hamburger Menu */
+        .profile {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .profile h3 {
+            margin: 10px 0 5px;
+            font-size: 18px;
+        }
+
+        .hamburger {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: #292b2c;
+            color: #fff;
+            font-size: 24px;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        /* Sidebar Hidden for Mobile */
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.show {
+            transform: translateX(0);
+        }
+
+        /* Transition for Sidebar */
+        .sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Main Content Section */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            margin-left: 200px; /* Sidebar Width for Desktop */
+            overflow-y: scroll;
+            
+        }
+
+        /* Adjust for Mobile View */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            .sidebar {
+                width: 40%;
+                position: fixed;
+                transform: translateX(-100%);
+            
+            }
+            .sidebar nav ul{
+                margin-top: 50px;
+            }
+            .main-content {
+                margin-left: 0;
+                padding-top: 60px;
+            }
+        }
+        h1, h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+    </style>
+     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+     const hamburger = document.querySelector(".hamburger");
+     const sidebar = document.querySelector(".sidebar");
+     const body = document.body;
+ 
+     // Toggle sidebar on hamburger click
+     hamburger.addEventListener("click", function (event) {
+         sidebar.classList.toggle("show");
+         sidebar.classList.toggle("hidden");
+     });
+ 
+     // Close sidebar when clicking outside
+     body.addEventListener("click", function (event) {
+         if (!sidebar.contains(event.target) && !hamburger.contains(event.target)) {
+             sidebar.classList.add("hidden");
+             sidebar.classList.remove("show");
+         }
+     });
+ });
+     </script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="hamburger">☰</div>
+        <aside class="sidebar hidden">
+            <nav>
+                <div class="profile">
+                    <img src="{{ url_for('static', filename='images/' +userphoto) }}" alt="Profile Photo">
+                    <h3 style="color: #f6f6f6;">{{ session['username'] }}</h3>
+                    <h3 style="color: #ff8c00">Tech Doctors</h3>
+                </div>
+                <ul>
+                    <li ><a href="{{ url_for('dashboard') }}">Home</a></li>
+                    <li ><a href="{{ url_for('projects') }}">Projects</a></li>
+                    <li ><a href="{{ url_for('accounts') }}">Accounts</a></li>
+                    <li><a href="{{ url_for('admin') }}">Admin</a></li>
+                    <li><a href="#">Charts</a></li>
+                    <li class="active"><a href="#">Invoices</a></li>
+                    
+                    <li><a href="{{ url_for('login') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <aside class="sidebar">
+            <nav>
+                <div class="profile">
+                    <img src="{{ url_for('static', filename='images/' +userphoto) }}" alt="Profile Photo">
+                    <h3 style="color: #f6f6f6;">{{ session['username'] }}</h3>
+                    <h3 style="color: #ff8c00">Tech Doctors</h3>
+                </div>
+                <ul>
+                    <li ><a href="{{ url_for('dashboard') }}">Home</a></li>
+                    <li ><a href="{{ url_for('projects') }}">Projects</a></li>
+                    <li ><a href="{{ url_for('accounts') }}">Accounts</a></li>
+                    <li><a href="{{ url_for('admin') }}">Admin</a></li>
+                    <li><a href="#">Charts</a></li>
+                    <li class="active"><a href="#">Invoices</a></li>
+                    
+                    <li><a href="{{ url_for('login') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </aside> 
+        <!-- Main Content -->
+        <main class="main-content" onclick="closeMenuOutside(event)">
+            <h1>Invoices</h1>
+    
+            <div class="table-container">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Project Name</th>
+                            <th>Submitted Date</th>
+                            <th>Invoice</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project in projects %}
+                        <tr>
+                            <td>{{ project[0] }}</td>
+                            <td>{{ project[1] }}</td>
+                            <td>{{ project[2] if project[2] else "N/A" }}</td>
+                            <td class="invoice-action">
+                                {% if project[3] %}
+                                    <a href="{{ url_for('download_invoice', project_id=project[0]) }}" class="btn-download">Download</a>
+                                {% else %}
+                                    <form action="{{ url_for('upload_invoice', project_id=project[0]) }}" method="POST" enctype="multipart/form-data">
+                                        <input type="file" name="invoice" accept="application/pdf" required>
+                                        <button type="submit" class="btn-upload">Upload</button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+
+    <script>
+     
+
+     function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const body = document.body;
+
+    if (menu.classList.contains('active')) {
+        menu.classList.remove('active');
+        body.classList.remove('menu-opened'); // Remove blur
+    } else {
+        menu.classList.add('active');
+        body.classList.add('menu-opened'); // Add blur
+    }
+}
+
+function closeMenuOutside(event) {
+    const menu = document.getElementById('mobileMenu');
+    const hamburger = document.querySelector('.hamburger');
+
+    if (menu.classList.contains('active') && !menu.contains(event.target) && !hamburger.contains(event.target)) {
+        toggleMenu();
+    }
+}
+
+
+    </script>
+</body>
+</html>
