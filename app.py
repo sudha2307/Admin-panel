@@ -14,7 +14,7 @@ users = {
     "m.sudha23ss@gmail.com": {"password": "sudha@23", "name": "Sudha", "photo": "sudha.jpg"},
     "hellotechdoctors@gmail.com": {"password": "#it151746", "name": "Tech Doctor", "photo": "TD Admins.jpg"},
     "sufiyansac@gmail.com": {"password": "0717", "name": "Sufiyan", "photo": "Sufiyan.jpg"},
-    "harees12@gmail.com": {"password": "#harees1212", "name": "Harees", "photo": "al harees.jpg"}
+    "alharees960@gmail.com": {"password": "#harees1212", "name": "Harees", "photo": "al harees.jpg"}
 }
 
 # Database connection function
