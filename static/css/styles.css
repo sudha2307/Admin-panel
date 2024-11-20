@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: url('/static/images/admins.jpg') no-repeat center center fixed;
+    background-size:cover;
+    font-family: Arial, sans-serif;
+}
+
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 2rem;
+    width: 300px;
+    text-align: center;
+}
+
+.login-box h2 {
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.input-group label {
+    display: block;
+    color: #fff;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.options a {
+    color: #fff;
+    text-decoration: none;
+}
+
+button {
+    width: 100%;
+    padding: 0.7rem;
+    border: none;
+    background: #ff8c00;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+.login-box p {
+    margin-top: 1rem;
+    color: #fff;
+}
+
+.login-box a {
+    color: #fff;
+    text-decoration: underline;
+}

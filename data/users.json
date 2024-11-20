@@ -1,0 +1,27 @@
+[
+    {
+        "email": "m.sudha23ss@gmail.com",
+        "password": "sudha@23",
+        "name": "Sudha",
+        "photo": "https://via.placeholder.com/60",
+        "mail": "m.sudha23ss@gmail.com"
+    },
+    {
+        "email": "hellotechdoctors@gmail.com",
+        "password": "#it151746",
+        "name": "Tech Doctors",
+        "photo": "https://via.placeholder.com/60"
+    },
+    {
+        "email": "sufiyansac@gmail.com",
+        "password": "0717",
+        "name": "Sufiyan",
+        "photo": "https://via.placeholder.com/60"
+    },
+    {
+        "email": "harees12@gmail.com",
+        "password": "#harees1212",
+        "name": "Harees",
+        "photo": "https://via.placeholder.com/60"
+    }
+]
